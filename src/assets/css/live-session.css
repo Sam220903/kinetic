@@ -1,0 +1,338 @@
+@font-face {
+  font-family: Lexend;
+  src: url("/fonts/Lexend-VariableFont_wght.ttf") format("truetype");
+}
+
+* {
+  font-family: 'Lexend';
+}
+
+body {
+  height: 100vh;
+  width: 100%;
+  background-color: #06100B;
+  margin: 0;
+  display: flex;
+  /* CAMBIO: Ahora en fila para poner Sidebar y Main uno al lado del otro */
+  flex-direction: row; 
+}
+
+#sidebar {
+  width: 20vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #0A1610;
+  justify-content: flex-start; /* CORRECCIÓN: 'left' no es válido, se usa 'flex-start' */
+}
+
+#sidebar .app-title{
+  color: #8DF48E;
+  font-weight: 1000;
+  font-size: 32px;
+  padding: 20px 20px;
+}
+
+#sidebar #links {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar #links li{
+  color: #A1AEA5;
+  list-style: none;
+  padding: 20px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  transition: 0.3s ease;
+}
+
+#sidebar #links li:hover{
+  background-color: #0F1C15;
+  transition: 0.3s ease;
+}
+
+#sidebar #links li .icon{
+  width: 20px;
+  height: 20px;
+}
+
+#sidebar #links li.selected{
+  background-color: #0F1C15;
+  border-left: 3px solid #8DF48E; 
+  color: #8DF48E;
+}
+
+#main-container {
+  flex: 1; /* Ocupa el 80vw restante */
+  height: 100vh;
+  display: flex; 
+  /* CAMBIO: Ahora en columna para apilar el header y la vista */
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.view-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#header {
+  display: flex;
+  flex-direction: row;
+  margin: 15px 20px;
+  align-items: center;
+  min-height: 10vh; /* CAMBIO: min-height suele ser mejor que max-height aquí para evitar que se corte el texto */
+}
+
+#header .view-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* NUEVO: Ajustes para el contenedor de la vista */
+#view-container {
+  flex: 1; /* Ocupa todo el espacio debajo del header */
+  padding: 0 20px 20px 20px; /* Márgenes internos para que el contenido no pegue a los bordes */
+  overflow-y: auto; /* Permite hacer scroll si el contenido es muy largo */
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+}
+
+#view-container #video-view{
+  height: 100%;
+  width: 55%;
+}
+
+#view-container #session-data{
+  height: 100%;
+  width: 45%;
+}
+
+.video-view {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  background-color: #000; 
+  border-radius: 10px; 
+  overflow: hidden; 
+  margin: 0 auto; 
+}
+
+.webcam,
+.output-canvas {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+
+.webcam {
+  transform: scaleX(-1); 
+}
+
+.output-canvas {
+  z-index: 10; 
+}
+
+#session-data{
+  background-color: #0A1610;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 10px;
+  gap: 10px;
+}
+
+#session-data h5{
+  color: #8DF48E;
+  letter-spacing: 0.2rem;
+  margin: 0;
+  margin-top: 25px;
+}
+
+#session-data h2 {
+  color: #fff;
+  font-size: 32px;
+  margin: 0;
+  margin-bottom: 25px;
+}
+
+#session-data .exercise-title{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+#session-data .exercise-title .icon{ 
+  color: #8DF48E;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  padding: 5px;
+  background-color: #182C1F;
+  border-radius: 5px;
+}
+
+#session-data .exercise-title span{
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+#session-data .exercise-reps{
+  display: flex;
+  flex-direction: column;
+  background-color: #0F1C15;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  justify-content: center;
+  gap: 10px;
+}
+
+#session-data .exercise-reps > span{
+  color: #A1AEA5;
+  letter-spacing: 0.2rem;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+}
+
+#session-data .exercise-reps > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 10px;
+}
+
+#session-data .exercise-reps > div #current-reps{
+  color: #8DF48E;
+  font-size: 80px;
+  font-weight: 1000;
+}
+
+#session-data .exercise-reps > div #total-reps{
+  color: #A1AEA5;
+  font-size: 32px;
+  font-weight: 500;
+}
+
+/* --- Estilos para la barra punteada de repeticiones --- */
+
+#session-data .exercise-reps .reps-progress-segmented {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 6px; /* Mismo grosor que el diseño */
+  margin-top: 5px; /* Separación de los números */
+  gap: 4px; /* Espacio entre las líneas */
+  justify-content: space-between;
+}
+
+#session-data .exercise-reps .reps-progress-segmented .segment {
+  flex: 1; /* Hace que todos los segmentos midan lo mismo */
+  height: 100%;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+#session-data .exercise-reps .reps-progress-segmented .segment.filled {
+  background-color: #8DF48E; /* Verde brillante */
+}
+
+#session-data .exercise-reps .reps-progress-segmented .segment.unfilled {
+  background-color: #182C1F; /* Un verde muy oscuro/grisáceo para el fondo */
+}
+
+#session-data .session-progress{
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+#session-data .session-progress > div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#session-data .session-progress #progress-text {
+  color: #A1AEA5;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#session-data .session-progress #progress-per {
+  color: #8DF48E;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+progress#total-progress {
+  /* 1. Limpiamos los estilos por defecto del sistema operativo */
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  
+  /* 2. Dimensiones y espaciado */
+  width: 100%;
+  height: 8px; /* Un grosor sutil y elegante */
+  margin-top: 10px; /* Separación del texto de arriba */
+  
+  /* 3. Color de fondo de la barra (Para Firefox) */
+  background-color: #182C1F; 
+  border-radius: 10px;
+}
+
+/* --- Ajustes para Chrome, Safari y Edge (WebKit) --- */
+
+/* La pista (el fondo gris oscuro de la barra) */
+progress#total-progress::-webkit-progress-bar {
+  background-color: #182C1F;
+  border-radius: 10px;
+}
+
+/* El progreso (la parte que se va llenando de verde) */
+progress#total-progress::-webkit-progress-value {
+  background-color: #8DF48E;
+  border-radius: 10px;
+  /* Opcional: una sombra verde sutil para darle un efecto "glow" al progreso */
+  box-shadow: 0 0 5px rgba(141, 244, 142, 0.4); 
+}
+
+/* --- Ajustes para Firefox --- */
+
+/* El progreso (en Firefox, la barra de fondo se controla en el selector principal) */
+progress#total-progress::-moz-progress-bar {
+  background-color: #8DF48E;
+  border-radius: 10px;
+}
+
+
+/* Ajuste sutil para que SweetAlert encaje perfecto con tu diseño */
+.kinetic-popup {
+  border: 1px solid #192921 !important;
+  border-radius: 20px !important;
+  font-family: 'Lexend', sans-serif !important;
+}
+

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Session</title>
+    <link rel="stylesheet" href="/src/assets/css/live-session.css">
+  </head>
+  <body>
+
+    <div id="sidebar">
+        <div class="app-title">
+          KINETIC
+        </div>
+        <ul id="links"></ul>  
+    </div>
+
+    <div id="main-container">
+
+      <div id="header">
+        <div class="view-title">
+          SESIÓN EN VIVO
+        </div>
+        <div class="user-data">
+
+        </div>
+      </div>
+
+      <div id="view-container">
+
+        <div class="video-view" id="video-view">
+            <video class="webcam" autoplay playsinline id="webcam"></video>
+            <canvas class="output-canvas" id="output-canvas" width="1280" height="720" ></canvas>
+        </div>
+
+        <div id="session-data">
+          <h5>SESIÓN EN CURSO</h5>
+          <h2>Fuerza: Parte baja del cuerpo</h2>
+          <div class="exercise-title">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="m536-84-56-56 142-142-340-340-142 142-56-56 56-58-56-56 84-84-56-58 56-56 58 56 84-84 56 56 58-56 56 56-142 142 340 340 142-142 56 56-56 58 56 56-84 84 56 58-56 56-58-56-84 84-56-56-58 56Z"/>
+            </svg>
+            <span>Sentadillas</span>
+          </div>
+          <div class="exercise-reps">
+            <span>REPETICIONES</span>
+            <div>
+              <span id="current-reps">0</span>
+              <span id="total-reps">/ 10</span>
+            </div>
+
+            <div class="reps-progress-segmented" id="reps-progress">
+              <span class="segment unfilled"></span>
+              <span class="segment unfilled"></span>
+              <span class="segment unfilled"></span>
+              <span class="segment unfilled"></span>
+              <span class="segment unfilled"></span>
+              <span class="segment unfilled"></span>
+              <span class="segment unfilled"></span>
+              <span class="segment unfilled"></span>
+              <span class="segment unfilled"></span>
+              <span class="segment unfilled"></span>
+            </div>
+
+          </div>
+
+          <div class="session-progress">
+            <div>
+              <span id="progress-text">PROGRESO TOTAL</span>
+              <span id="progress-per">0%</span>
+            </div>
+            <progress value="0" max="100" id="total-progress"></progress>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <script type="module" src="/src/assets/js/vision.js"></script>
+    <script type="module" src="/src/assets/js/sidebar.js"></script>
+  </body>
+</html>
