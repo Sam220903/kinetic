@@ -237,27 +237,24 @@ body {
 /* --- ESTADÍSTICAS (Minutos y Sets) --- */
 .card-stats {
     display: flex;
-    gap: 40px;
     margin-top: auto; /* Empuja esto hacia abajo si la descripción es corta */
+    flex-direction: row;
 }
 
-.stat {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
 
 .stat-label {
     color: #A1AEA5;
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 1px;
     text-transform: uppercase;
+    width: 40%;
 }
 
 .stat-value {
     color: #fff;
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
+    width: auto;
 }
 
 /* --- BOTÓN DE LANZAMIENTO --- */
@@ -271,7 +268,9 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s ease;
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
 }
 
 .launch-btn:hover {

@@ -189,6 +189,12 @@ body {
   border-radius: 5px;
 }
 
+#session-data .exercise-title p {
+    color: #A1AEA5;
+    font-weight: 500;
+    font-size: 16px;
+}
+
 #session-data .exercise-title span{
   color: #fff;
   font-weight: 600;
