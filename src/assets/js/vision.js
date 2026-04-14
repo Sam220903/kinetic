@@ -132,6 +132,31 @@ const predictWebcam = async () => {
 
               console.log("¡Sentadilla completada! Total:", repCount);
 
+              // NUEVO: Lanzamos SweetAlert cuando llega al máximo
+      if (repCount === maxReps) {
+        
+        Swal.fire({
+          title: '¡Ejercicio Completado!',
+          text: 'Has terminado el ejercicio. ¡Excelente forma!',
+          icon: 'success',
+          // --- ESTILO KINETIC ---
+          background: '#0A1610',         // El color de fondo de tus tarjetas
+          color: '#ffffff',              // Texto blanco
+          iconColor: '#8DF48E',          // Icono verde neón
+          confirmButtonColor: '#8DF48E', // Botón verde neón
+          confirmButtonText: '<span style="color: #06100B; font-weight: bold; font-family: Lexend;">Continuar</span>',
+          customClass: {
+            popup: 'kinetic-popup'       // Clase opcional por si quieres darle más estilos en tu CSS
+          }
+        }).then((result) => {
+          // Esto se ejecuta cuando el usuario hace clic en "Continuar"
+          if (result.isConfirmed) {
+            console.log("El usuario cerró la alerta. Listo para el siguiente ejercicio.");
+            // Aquí podemos reiniciar los contadores
+          }
+        });
+        
+      }
 
             }
           }
