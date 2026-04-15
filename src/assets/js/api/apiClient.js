@@ -1,5 +1,5 @@
 const API_Config = {
-    baseURL: 'http://localhost:8080/api/public',
+    baseURL: 'http://localhost/VHealth_API/api/public',
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json',

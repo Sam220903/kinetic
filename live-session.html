@@ -36,18 +36,25 @@
         <div id="session-data">
           <h5>SESIÓN EN CURSO</h5>
           <h2 id="routine-name"></h2>
-          <div class="exercise-title">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
-              <path d="m536-84-56-56 142-142-340-340-142 142-56-56 56-58-56-56 84-84-56-58 56-56 58 56 84-84 56 56 58-56 56 56-142 142 340 340 142-142 56 56-56 58 56 56-84 84 56 58-56 56-58-56-84 84-56-56-58 56Z"/>
-            </svg>
-            <p>Ejercicio en curso:</p>
-            <span id="exercise-name" class="exercise-name"></span>
+          <div class="exercise-data">
+            <div class="exercise-title">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                <path d="m536-84-56-56 142-142-340-340-142 142-56-56 56-58-56-56 84-84-56-58 56-56 58 56 84-84 56 56 58-56 56 56-142 142 340 340 142-142 56 56-56 58 56 56-84 84 56 58-56 56-58-56-84 84-56-56-58 56Z"/>
+              </svg>
+              <p>Ejercicio en curso:</p>
+              <span id="exercise-name" class="exercise-name"></span>
+            </div>
+            <div class="exercise-zone">
+              <p>Zona del cuerpo:</p>
+              <span id="exercise-body-zone" class="exercise-body-zone"></span>
+            </div>
           </div>
+
           <div class="exercise-reps">
             <span>REPETICIONES</span>
             <div>
               <span id="current-reps">0</span>
-              <span id="total-reps">/ 10</span>
+              <span id="total-reps">/ </span>
             </div>
 
             <div class="reps-progress-segmented" id="reps-progress">

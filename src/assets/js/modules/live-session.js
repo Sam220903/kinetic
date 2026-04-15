@@ -9,11 +9,13 @@ const canvasCtx = canvasRef.getContext("2d");
 const drawingUtils = new DrawingUtils(canvasCtx);
 
 const currentRepsElement = document.getElementById("current-reps"); 
+const totalRepsElement = document.getElementById('total-reps');
 const repsProgressElement = document.getElementById("reps-progress");
 const progressPerElement = document.getElementById("progress-per");
 const totalProgressElement = document.getElementById("total-progress");
 const routineName = document.getElementById("routine-name");
 const exerciseName = document.getElementById('exercise-name');
+const exerciseBodyZone = document.getElementById('exercise-body-zone');
 
 // Variables para la lógica dinámica del ejercicio
 let currentExerciseIndex = 0;     // Qué ejercicio de la rutina estamos haciendo
@@ -32,7 +34,6 @@ const urlParams = new URLSearchParams(window.location.search);
 const routineID = urlParams.get('routine_id');
 
 
-
 // Obtenemos los datos y preparamos el primer ejercicio
 try {
   routineData = await routinesService.getbyID(routineID);
@@ -49,19 +50,51 @@ try {
   console.error("Error al obtener la rutina de la API:", error);
 }
 
-// Prepara las variables para el ejercicio actual
+// Prepara las variables para el ejercicio actual y da instrucciones espaciales
 function setupCurrentExercise() {
   const exercise = routineData.exercises[currentExerciseIndex];
   exerciseName.innerHTML = exercise.name;
+  totalRepsElement.innerHTML = `/ ${exercise.repetitions}`;
+  exerciseBodyZone.innerHTML = exercise.body_zone;
   maxReps = parseInt(exercise.repetitions); 
   currentAiParams = JSON.parse(exercise.ai_parameters); // Parseamos el JSON de la DB
   repCount = 0;
   isContracting = false;
   
-  console.log(`[KINETIC] Iniciando: ${exercise.exercise} | Objetivo: ${maxReps} reps`);
+  // (Corrección menor: cambié exercise.exercise por exercise.name)
+  console.log(`[KINETIC] Iniciando: ${exercise.name} | Objetivo: ${maxReps} reps`);
   
   if (currentRepsElement) currentRepsElement.innerText = repCount;
   updateProgressUI(0);
+
+  // --- NUEVA LÓGICA: Alerta dinámica según la zona del cuerpo ---
+  const zonaCuerpo = exercise.body_zone;
+  let alertaTitulo = '';
+  let alertaTexto = '';
+
+  if (zonaCuerpo === 'Tren superior') {
+      alertaTitulo = 'Cámara cerca 💻';
+      alertaTexto = 'Puedes hacer este ejercicio sentado. Asegúrate de que la cámara vea claramente tu torso y brazos.';
+  } else if (zonaCuerpo === 'Tren inferior') {
+      alertaTitulo = 'Aléjate un poco 🚶‍♂️';
+      alertaTexto = 'Retrocede unos 2 metros. La cámara necesita ver tus piernas completas de pies a cabeza.';
+  } else {
+      alertaTitulo = 'Espacio libre 🧘‍♂️';
+      alertaTexto = 'Asegúrate de tener espacio a tu alrededor para mover tu torso.';
+  }
+
+  // Mostramos el popup de preparación antes de arrancar la serie
+  Swal.fire({
+      title: alertaTitulo,
+      text: alertaTexto,
+      icon: 'info',
+      background: '#0A1610', 
+      color: '#ffffff', 
+      iconColor: '#8DF48E', 
+      confirmButtonColor: '#8DF48E',
+      confirmButtonText: '<span style="color: #06100B; font-weight: bold; font-family: Lexend;">¡Entendido!</span>',
+      customClass: { popup: 'kinetic-popup' }
+  });
 }
 
 

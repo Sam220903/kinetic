@@ -172,14 +172,12 @@ body {
   margin-bottom: 25px;
 }
 
-#session-data .exercise-title{
+#session-data .exercise-data{
   display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
+  flex-direction: column;
 }
 
-#session-data .exercise-title .icon{ 
+#session-data .exercise-data .icon{ 
   color: #8DF48E;
   width: 24px;
   height: 24px;
@@ -189,17 +187,33 @@ body {
   border-radius: 5px;
 }
 
-#session-data .exercise-title p {
+#session-data .exercise-data p {
     color: #A1AEA5;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 18px;
 }
 
-#session-data .exercise-title span{
+#session-data .exercise-data span{
   color: #fff;
   font-weight: 600;
+  font-size: 18px;
+}
+
+#session-data .exercise-title, #session-data .exercise-zone{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+#session-data .exercise-zone{
+  margin-left: 44px;
+}
+
+#session-data .exercise-zone p, #session-data .exercise-zone span{
   font-size: 16px;
 }
+
 
 #session-data .exercise-reps{
   display: flex;
@@ -273,6 +287,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 90%;
+  align-self: center;
 }
 
 #session-data .session-progress > div {
