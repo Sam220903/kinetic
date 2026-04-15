@@ -17,6 +17,9 @@ const routineName = document.getElementById("routine-name");
 const exerciseName = document.getElementById('exercise-name');
 const exerciseBodyZone = document.getElementById('exercise-body-zone');
 
+// --- NUEVO: Referencia al botón de ejemplo ---
+const btnReference = document.getElementById("btn-reference");
+
 // Variables para la lógica dinámica del ejercicio
 let currentExerciseIndex = 0;     // Qué ejercicio de la rutina estamos haciendo
 let isContracting = false;        // Estado genérico dinámico
@@ -29,17 +32,63 @@ let poseLandmarker;
 let runningMode = "VIDEO"; 
 let lastVideoTime = -1;
 
+// --- NUEVO: Lógica del botón de animación Lottie ---
+btnReference.addEventListener("click", () => {
+  // Asegurarnos de que los datos de la rutina ya se descargaron
+  if (!routineData || !routineData.exercises) return;
+
+  const currentExercise = routineData.exercises[currentExerciseIndex];
+
+  // Si el ejercicio tiene una URL de animación registrada en la BD
+  if (currentExercise.animation_url) {
+      Swal.fire({
+          title: `¿Cómo hacer: ${currentExercise.name}?`,
+          html: `
+              <div style="display: flex; justify-content: center; background: #ffffff; border-radius: 10px; padding: 10px;">
+                  <lottie-player 
+                      src="${currentExercise.animation_url}" 
+                      background="transparent" 
+                      speed="1" 
+                      style="width: 250px; height: 250px;" 
+                      loop 
+                      autoplay>
+                  </lottie-player>
+              </div>
+              <p style="margin-top: 15px; font-size: 0.9em; color: #a0a0a0;">
+                  ${currentExercise.description || "Mantén una postura firme, controla la respiración y realiza el movimiento completo de manera fluida."}
+              </p>
+          `,
+          background: '#0A1610', 
+          color: '#ffffff',
+          confirmButtonColor: '#8DF48E',
+          confirmButtonText: '<span style="color: #06100B; font-weight: bold; font-family: Lexend;">Cerrar</span>',
+          customClass: { popup: 'kinetic-popup' }
+      });
+  } else {
+      // Si no hay animación en la BD para este ejercicio específico
+      Swal.fire({
+          icon: 'info',
+          title: 'Sin referencia visual',
+          text: 'Aún no contamos con una animación para este ejercicio.',
+          background: '#0A1610', 
+          color: '#ffffff', 
+          confirmButtonColor: '#8DF48E',
+          customClass: { popup: 'kinetic-popup' }
+      });
+  }
+});
+// ----------------------------------------------------
+
+
 // --- INICIALIZACIÓN DE DATOS DE LA API ---
 const urlParams = new URLSearchParams(window.location.search);
 const routineID = urlParams.get('routine_id');
-
 
 // Obtenemos los datos y preparamos el primer ejercicio
 try {
   routineData = await routinesService.getbyID(routineID);
 
   routineName.innerHTML = routineData.routine_details.name;
-
   
   if (routineData && routineData.exercises && routineData.exercises.length > 0) {
     setupCurrentExercise();
@@ -61,13 +110,12 @@ function setupCurrentExercise() {
   repCount = 0;
   isContracting = false;
   
-  // (Corrección menor: cambié exercise.exercise por exercise.name)
   console.log(`[KINETIC] Iniciando: ${exercise.name} | Objetivo: ${maxReps} reps`);
   
   if (currentRepsElement) currentRepsElement.innerText = repCount;
   updateProgressUI(0);
 
-  // --- NUEVA LÓGICA: Alerta dinámica según la zona del cuerpo ---
+  // --- LÓGICA: Alerta dinámica según la zona del cuerpo ---
   const zonaCuerpo = exercise.body_zone;
   let alertaTitulo = '';
   let alertaTexto = '';

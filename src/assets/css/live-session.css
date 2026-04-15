@@ -175,6 +175,7 @@ body {
 #session-data .exercise-data{
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 #session-data .exercise-data .icon{ 
@@ -214,6 +215,48 @@ body {
   font-size: 16px;
 }
 
+#session-data .exercise-title{
+  justify-content: space-between;
+}
+
+#session-data .exercise-title div{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+/* --- Estilos para el botón Ver Ejemplo (Solo Ícono) --- */
+.btn-ref {
+  background-color: #0F1C15; 
+  color: #8DF48E; 
+  border: 1px solid #182C1F;
+  border-radius: 8px; /* Borde un poco más redondeado para un look moderno */
+  width: 32px; /* Ancho fijo */
+  height: 32px; /* Alto fijo igual al ancho para que sea cuadrado */
+  display: flex;
+  justify-content: center; /* Centra el ícono horizontalmente */
+  align-items: center; /* Centra el ícono verticalmente */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 5px; /* Pequeña separación del nombre del ejercicio */
+  padding: 0; /* Quitamos el padding para usar el width/height fijo */
+  margin-right: 10px;
+}
+
+.btn-ref .btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-ref:hover {
+  background-color: #182C1F;
+  border-color: #8DF48E;
+}
+
+.btn-ref:active {
+  transform: scale(0.92); /* Un efecto de "click" un poco más pronunciado */
+}
 
 #session-data .exercise-reps{
   display: flex;
