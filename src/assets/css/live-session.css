@@ -7,14 +7,35 @@
   font-family: 'Lexend';
 }
 
+/* =====================================================
+   PALETA: Titanium Slate
+   ===================================================== */
+
+:root {
+  --color-primary:             #3B6090;
+  --color-tertiary:            #2E5484;
+  --color-secondary:           #A4B4BE;
+  --color-neutral:             #0A0F12;
+
+  --surface-base:              #C8D6E5;
+  --surface-container-low:     #EBF1F7;
+  --surface-container-high:    #DCE6F0;
+  --surface-container-highest: #CDD9E6;
+
+  --text-primary:              #0A0F12;
+  --text-secondary:            #4A5568;
+  --text-on-accent:            #FFFFFF;
+
+  --shadow-primary: 0 8px 32px rgba(59, 96, 144, 0.10);
+}
+
 body {
   height: 100vh;
   width: 100%;
-  background-color: #06100B;
+  background-color: var(--surface-base);
   margin: 0;
   display: flex;
-  /* CAMBIO: Ahora en fila para poner Sidebar y Main uno al lado del otro */
-  flex-direction: row; 
+  flex-direction: row;
 }
 
 #sidebar {
@@ -22,12 +43,12 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #0A1610;
-  justify-content: flex-start; /* CORRECCIÓN: 'left' no es válido, se usa 'flex-start' */
+  background-color: var(--surface-container-low);
+  justify-content: flex-start;
 }
 
-#sidebar .app-title{
-  color: #8DF48E;
+#sidebar .app-title {
+  color: var(--color-primary);
   font-weight: 1000;
   font-size: 32px;
   padding: 20px 20px;
@@ -41,8 +62,8 @@ body {
   flex-direction: column;
 }
 
-#sidebar #links li{
-  color: #A1AEA5;
+#sidebar #links li {
+  color: var(--text-secondary);
   list-style: none;
   padding: 20px 20px;
   width: 100%;
@@ -54,27 +75,26 @@ body {
   transition: 0.3s ease;
 }
 
-#sidebar #links li:hover{
-  background-color: #0F1C15;
+#sidebar #links li:hover {
+  background-color: var(--surface-container-high);
   transition: 0.3s ease;
 }
 
-#sidebar #links li .icon{
+#sidebar #links li .icon {
   width: 20px;
   height: 20px;
 }
 
-#sidebar #links li.selected{
-  background-color: #0F1C15;
-  border-left: 3px solid #8DF48E; 
-  color: #8DF48E;
+#sidebar #links li.selected {
+  background-color: var(--surface-container-high);
+  border-left: 3px solid var(--color-primary);
+  color: var(--color-primary);
 }
 
 #main-container {
-  flex: 1; /* Ocupa el 80vw restante */
+  flex: 1;
   height: 100vh;
-  display: flex; 
-  /* CAMBIO: Ahora en columna para apilar el header y la vista */
+  display: flex;
   flex-direction: column;
   overflow: hidden;
 }
@@ -91,156 +111,163 @@ body {
   flex-direction: row;
   margin: 15px 20px;
   align-items: center;
-  min-height: 10vh; /* CAMBIO: min-height suele ser mejor que max-height aquí para evitar que se corte el texto */
+  min-height: 10vh;
 }
 
 #header .view-title {
-  color: #fff;
+  color: var(--color-neutral);
   font-size: 18px;
   font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-/* NUEVO: Ajustes para el contenedor de la vista */
 #view-container {
-  flex: 1; /* Ocupa todo el espacio debajo del header */
-  padding: 0 20px 20px 20px; /* Márgenes internos para que el contenido no pegue a los bordes */
-  overflow-y: auto; /* Permite hacer scroll si el contenido es muy largo */
+  flex: 1;
+  padding: 0 20px 20px 20px;
+  overflow-y: auto;
   display: flex;
   flex-direction: row;
   margin-left: 20px;
 }
 
-#view-container #video-view{
+#view-container #video-view {
   height: 100%;
   width: 55%;
 }
 
-#view-container #session-data{
+#view-container #session-data {
   height: 100%;
   width: 45%;
 }
 
+/* --- VIDEO --- */
 .video-view {
   position: relative;
   width: 100%;
   max-width: 500px;
-  background-color: #000; 
-  border-radius: 10px; 
-  overflow: hidden; 
-  margin: 0 auto; 
+  background-color: var(--color-neutral);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto;
 }
 
 .webcam,
 .output-canvas {
-  position: absolute; 
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
 }
 
 .webcam {
-  transform: scaleX(-1); 
+  transform: scaleX(-1);
 }
 
 .output-canvas {
-  z-index: 10; 
+  z-index: 10;
 }
 
-#session-data{
-  background-color: #0A1610;
+/* --- PANEL DE DATOS --- */
+#session-data {
+  background-color: var(--surface-container-low);
   padding: 0 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   border-radius: 10px;
   gap: 10px;
+  box-shadow: var(--shadow-primary);
 }
 
-#session-data h5{
-  color: #8DF48E;
+#session-data h5 {
+  color: var(--color-primary);
   letter-spacing: 0.2rem;
   margin: 0;
   margin-top: 25px;
 }
 
 #session-data h2 {
-  color: #fff;
+  color: var(--text-primary);
   font-size: 32px;
   margin: 0;
   margin-bottom: 25px;
 }
 
-#session-data .exercise-data{
+#session-data .exercise-data {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-#session-data .exercise-data .icon{ 
-  color: #8DF48E;
+#session-data .exercise-data .icon {
+  color: var(--color-primary);
   width: 24px;
   height: 24px;
   flex-shrink: 0;
   padding: 5px;
-  background-color: #182C1F;
+  background-color: var(--surface-container-highest);
   border-radius: 5px;
 }
 
 #session-data .exercise-data p {
-    color: #A1AEA5;
-    font-weight: 500;
-    font-size: 18px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 18px;
 }
 
-#session-data .exercise-data span{
-  color: #fff;
+#session-data .exercise-data span {
+  color: var(--text-primary);
   font-weight: 600;
   font-size: 18px;
 }
 
-#session-data .exercise-title, #session-data .exercise-zone{
+#session-data .exercise-title,
+#session-data .exercise-zone {
   display: flex;
   flex-direction: row;
   gap: 10px;
   align-items: center;
 }
 
-#session-data .exercise-zone{
+#session-data .exercise-zone {
   margin-left: 44px;
 }
 
-#session-data .exercise-zone p, #session-data .exercise-zone span{
+#session-data .exercise-zone p,
+#session-data .exercise-zone span {
   font-size: 16px;
 }
 
-#session-data .exercise-title{
+#session-data .exercise-title {
   justify-content: space-between;
 }
 
-#session-data .exercise-title div{
+#session-data .exercise-title div {
   display: flex;
   flex-direction: row;
   gap: 10px;
   align-items: center;
 }
 
-/* --- Estilos para el botón Ver Ejemplo (Solo Ícono) --- */
+/* --- BOTÓN VER EJEMPLO --- */
 .btn-ref {
-  background-color: #0F1C15; 
-  color: #8DF48E; 
-  border: 1px solid #182C1F;
-  border-radius: 8px; /* Borde un poco más redondeado para un look moderno */
-  width: 32px; /* Ancho fijo */
-  height: 32px; /* Alto fijo igual al ancho para que sea cuadrado */
+  background-color: var(--surface-container-high);
+  color: var(--color-primary);
+  /* Ghost border — secondary al 40% */
+  border: 2px solid rgba(164, 180, 190, 0.40);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
   display: flex;
-  justify-content: center; /* Centra el ícono horizontalmente */
-  align-items: center; /* Centra el ícono verticalmente */
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-left: 5px; /* Pequeña separación del nombre del ejercicio */
-  padding: 0; /* Quitamos el padding para usar el width/height fijo */
+  margin-left: 5px;
+  padding: 0;
   margin-right: 10px;
 }
 
@@ -250,32 +277,35 @@ body {
 }
 
 .btn-ref:hover {
-  background-color: #182C1F;
-  border-color: #8DF48E;
+  background-color: var(--color-primary);
+  color: var(--text-on-accent);
 }
 
 .btn-ref:active {
-  transform: scale(0.92); /* Un efecto de "click" un poco más pronunciado */
+  transform: scale(0.92);
 }
 
-#session-data .exercise-reps{
+/* --- CONTADOR DE REPS --- */
+#session-data .exercise-reps {
   display: flex;
   flex-direction: column;
-  background-color: #0F1C15;
+  background-color: var(--surface-container-highest);
   padding: 20px;
   border-radius: 10px;
   width: 90%;
   justify-content: center;
   gap: 10px;
+  box-shadow: var(--shadow-primary);
 }
 
-#session-data .exercise-reps > span{
-  color: #A1AEA5;
+#session-data .exercise-reps > span {
+  color: var(--text-secondary);
   letter-spacing: 0.2rem;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   justify-content: center;
+  text-transform: uppercase;
 }
 
 #session-data .exercise-reps > div {
@@ -286,46 +316,50 @@ body {
   gap: 10px;
 }
 
-#session-data .exercise-reps > div #current-reps{
-  color: #8DF48E;
+#session-data .exercise-reps > div #current-reps {
+  /* Gradiente en el número principal — firma del sistema */
+  background: linear-gradient(135deg, var(--color-primary), var(--color-tertiary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: 80px;
   font-weight: 1000;
 }
 
-#session-data .exercise-reps > div #total-reps{
-  color: #A1AEA5;
+#session-data .exercise-reps > div #total-reps {
+  color: var(--text-secondary);
   font-size: 32px;
   font-weight: 500;
 }
 
-/* --- Estilos para la barra punteada de repeticiones --- */
-
+/* --- BARRA SEGMENTADA DE REPS --- */
 #session-data .exercise-reps .reps-progress-segmented {
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 6px; /* Mismo grosor que el diseño */
-  margin-top: 5px; /* Separación de los números */
-  gap: 4px; /* Espacio entre las líneas */
+  height: 6px;
+  margin-top: 5px;
+  gap: 4px;
   justify-content: space-between;
 }
 
 #session-data .exercise-reps .reps-progress-segmented .segment {
-  flex: 1; /* Hace que todos los segmentos midan lo mismo */
+  flex: 1;
   height: 100%;
   border-radius: 3px;
   transition: background-color 0.3s ease;
 }
 
 #session-data .exercise-reps .reps-progress-segmented .segment.filled {
-  background-color: #8DF48E; /* Verde brillante */
+  background: linear-gradient(90deg, var(--color-primary), var(--color-tertiary));
 }
 
 #session-data .exercise-reps .reps-progress-segmented .segment.unfilled {
-  background-color: #182C1F; /* Un verde muy oscuro/grisáceo para el fondo */
+  background-color: var(--color-secondary);
 }
 
-#session-data .session-progress{
+/* --- PROGRESO TOTAL --- */
+#session-data .session-progress {
   margin-top: 25px;
   display: flex;
   flex-direction: column;
@@ -341,62 +375,51 @@ body {
 }
 
 #session-data .session-progress #progress-text {
-  color: #A1AEA5;
+  color: var(--text-secondary);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 #session-data .session-progress #progress-per {
-  color: #8DF48E;
+  color: var(--color-primary);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 progress#total-progress {
-  /* 1. Limpiamos los estilos por defecto del sistema operativo */
   -webkit-appearance: none;
   appearance: none;
   border: none;
-  
-  /* 2. Dimensiones y espaciado */
   width: 100%;
-  height: 8px; /* Un grosor sutil y elegante */
-  margin-top: 10px; /* Separación del texto de arriba */
-  
-  /* 3. Color de fondo de la barra (Para Firefox) */
-  background-color: #182C1F; 
+  height: 8px;
+  margin-top: 10px;
+  background-color: var(--color-secondary);
   border-radius: 10px;
 }
 
-/* --- Ajustes para Chrome, Safari y Edge (WebKit) --- */
-
-/* La pista (el fondo gris oscuro de la barra) */
 progress#total-progress::-webkit-progress-bar {
-  background-color: #182C1F;
+  background-color: var(--color-secondary);
   border-radius: 10px;
 }
 
-/* El progreso (la parte que se va llenando de verde) */
 progress#total-progress::-webkit-progress-value {
-  background-color: #8DF48E;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-tertiary));
   border-radius: 10px;
-  /* Opcional: una sombra verde sutil para darle un efecto "glow" al progreso */
-  box-shadow: 0 0 5px rgba(141, 244, 142, 0.4); 
+  box-shadow: 0 0 8px rgba(59, 96, 144, 0.35);
 }
 
-/* --- Ajustes para Firefox --- */
-
-/* El progreso (en Firefox, la barra de fondo se controla en el selector principal) */
 progress#total-progress::-moz-progress-bar {
-  background-color: #8DF48E;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-tertiary));
   border-radius: 10px;
 }
 
-
-/* Ajuste sutil para que SweetAlert encaje perfecto con tu diseño */
+/* --- SWEETALERT POPUP --- */
 .kinetic-popup {
-  border: 1px solid #192921 !important;
+  border: 1px solid rgba(164, 180, 190, 0.40) !important;
   border-radius: 20px !important;
   font-family: 'Lexend', sans-serif !important;
+  background-color: var(--surface-container-low) !important;
+  color: var(--text-primary) !important;
 }
-
