@@ -430,6 +430,6 @@ footer {
     .hero h1 { font-size: 48px; }
     .hero-actions { justify-content: center; }
     .hero-visual { display: none; }
-    .modules-grid { grid-template-cols: 1fr; }
+    .modules-grid { grid-template-columns: 1fr; }
     .workflow { flex-direction: column; }
 }
