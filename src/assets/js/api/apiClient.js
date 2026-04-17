@@ -1,5 +1,6 @@
 const API_Config = {
-    baseURL: 'http://localhost/VHealth_API/api/public',
+    // baseURL: 'http://localhost/VHealth_API/api/public', // Conexión API en Linux (Pila LAMP)
+    baseURL: 'http://localhost:8080/api/public', // Conexión API en Windows (con Docker)
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json',

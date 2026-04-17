@@ -3,11 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="0; url=routines">
+    <title>VHealth | Lumacad</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/src/assets/css/index.css">
 </head>
 <body>
-    <p>If you are not redirected automatically, <a href="routines">Click here</a>.</p>
+
+    <header>
+        <div class="logo">
+            VHEALTH
+            <small>By LumAcad</small>
+        </div>
+        <nav>
+            <a href="#about" class="active">Acerca de</a>
+            <a href="#functions">Funciones</a>
+            <a href="#workflow">Flujo de trabajo</a>
+            <a href="#start">Comenzar</a>
+        </nav>
+        <div class="auth-buttons">
+            <button class="btn-login">Login</button>
+            <button class="btn-primary" onclick="location.href='routines.html'">Demo</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="about">
+            <video class="hero-bg-video" src="/videos/landing.mp4" autoplay loop muted playsinline></video>
+            <div class="hero-content">
+                <span class="badge">RECONOCIMIENTO DE EJERCICIOS DE PAUSAS ACTIVAS</span>
+                <h1>Gestión Inteligente de Movimiento</h1>
+                <p>Promueva el cuidado de la salud en su entorno laboral mediante pausas activas. Controle la correcta ejecución de ejercicios mediante visión artificial.</p>
+                <div class="hero-actions">
+                    <button class="btn-primary">Crea tu cuenta</button>
+                    <button class="btn-outline" onclick="location.href='routines.html'">Ver Demo</button>
+                </div>
+            </div>
+        </section>
+
+        <!--System functions -->
+        <section class="section-padding modules-section" id="functions">
+            <h2 class="section-title">¿Qué funciones ofrecemos?</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-icon">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="m536-84-56-56 142-142-340-340-142 142-56-56 56-58-56-56 84-84-56-58 56-56 58 56 84-84 56 56 58-56 56 56-142 142 340 340 142-142 56 56-56 58 56 56-84 84 56 58-56 56-58-56-84 84-56-56-58 56Z"/></svg>
+                    </div>
+                    <h3>Sesiones en vivo</h3>
+                    <p>Participe en sesiones en vivo donde el sistema sea capaz de decirle en tiempo real cuando ha completado un ejercicio, acompañandolo en su activación mediante visión artificial.</p>
+                </div>
+                <div class="module-card">
+                    <div class="module-icon">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M756-120 537-339l84-84 219 219-84 84Zm-552 0-84-84 276-276-68-68-28 28-51-51v82l-28 28-121-121 28-28h82l-50-50 142-142q20-20 43-29t47-9q24 0 47 9t43 29l-92 92 50 50-28 28 68 68 90-90q-4-11-6.5-23t-2.5-24q0-59 40.5-99.5T701-841q15 0 28.5 3t27.5 9l-99 99 72 72 99-99q7 14 9.5 27.5T841-701q0 59-40.5 99.5T701-561q-12 0-24-2t-23-7L204-120Z"/></svg>
+                    </div>
+                    <h3>Creación de rutinas</h3>
+                    <p>Cree y personalice sus propias rutinas seleccionando entre la gran biblioteca de ejercicios que contiene el sistema.</p>
+                </div>
+                <div class="module-card">
+                    <div class="module-icon">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480v320q0 33-23.5 56.5T800-80H480Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+                    </div>
+                    <h3>Suba sus ejercicios</h3>
+                    <p>Interactúe con el sistema, experimentando de primera mano como el sistema reconoce un ejercicio mientras crea el suyo propio.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Precision Workflow -->
+        <section class="section-padding workflow" id="workflow">
+            <div class="workflow-content">
+                <h2 class="section-title" style="color: white; border-left: 4px solid var(--color-primary); padding-left: 24px;">Flujo de Trabajo</h2>
+                
+                <div class="step-list">
+                    <div class="workflow-step">
+                        <div class="step-num">01</div>
+                        <div class="step-info">
+                            <h4>Seleccione su ejercicio</h4>
+                            <p>Elija uno entre varios ejercicios, ya sea con nuestro amplio repertorio o en sus rutinas personalizadas.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-num">02</div>
+                        <div class="step-info">
+                            <h4>Vea como hacerlo</h4>
+                            <p>Consulte nuestras guías visuales acordes a los ejercicios y rutinas que haya elegido.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-num">03</div>
+                        <div class="step-info">
+                            <h4>Siga su avance en tiempo real</h4>
+                            <p>Nuestro sistema le da retroalimentación en todo momento de su avance durante una rutina en curso.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <section class="stats-bar">
+            <div class="stat-item">
+                <h2>90%</h2>
+                <p>Precisión</p>
+            </div>
+            <div class="stat-item">
+                <h2>10-</h2>
+                <p>Minutos al día</p>
+            </div>
+            <div class="stat-item">
+                <h2>4+</h2>
+                <p>Ejercicios disponibles</p>
+            </div>
+            <div class="stat-item">
+                <h2>24/7</h2>
+                <p>Soporte de Ingeniería</p>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="final-cta" id="start">
+            <h2>Transforme su entorno laboral <span> HOY </span> </h2>
+            <p>Comience a cuidar de su salud en todo momento, ahora también en su oficina</p>
+            <div class="cta-buttons">
+                <button class="btn-primary" style="padding: 18px 48px; font-size: 16px;" onclick="location.href='/routines.html'">Comenzar Ahora</button>
+                <button class="btn-outline">Documentación Técnica</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div>&copy; 2026 VHealth By LumAcad.</div>
+        <div class="footer-links" style="display: flex; gap: 24px;">
+            <a href="#">Términos</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Documentación</a>
+        </div>
+    </footer>
 </body>
-<script type="module" src="/src/main.js"></script>
+<script src="/src/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    // 1. Seleccionamos todas las secciones que tienen un ID y todos los enlaces de navegación
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a');
+
+    // 2. Configuramos el observador
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5 // El cambio ocurrirá cuando al menos el 50% de la sección sea visible
+    };
+
+    // 3. Creamos el observador
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Obtenemos el ID de la sección que está actualmente en pantalla
+                const currentId = entry.target.getAttribute('id');
+                
+                // Quitamos la clase 'active' de todos los enlaces
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                // Le añadimos la clase 'active' al enlace que coincida con el ID
+                const activeLink = document.querySelector(`nav a[href="#${currentId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        });
+    }, observerOptions);
+
+    // 4. Le decimos al observador que vigile cada sección
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+});
+</script>
 </html>

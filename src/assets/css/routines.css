@@ -1,24 +1,29 @@
-@font-face {
-  font-family: Lexend;
-  src: url("/fonts/Lexend-VariableFont_wght.ttf") format("truetype");
-}
-
 * {
   font-family: 'Lexend';
 }
 
 /* =====================================================
-   PALETA: Titanium Slate
-   --color-primary:    #3B6090  (Azul acero — acento principal)
-   --color-tertiary:   #2E5484  (Azul profundo — énfasis)
-   --color-secondary:  #A4B4BE  (Slate frío — texto secundario / ghost borders)
+   PALETA: Titanium Slate — Expanded Blue
+   
+   Colores base:
+   --color-primary:    #3B6090  (Azul acero)
+   --color-tertiary:   #2E5484  (Azul profundo)
+   --color-secondary:  #A4B4BE  (Slate frío)
    --color-neutral:    #0A0F12  (Base profunda)
 
-   Superficies (Light mode, tonos fríos):
-   --surface-base:              #F0F4F8  (Canvas principal)
-   --surface-container-low:     #E2E8EF  (Sidebar / áreas secundarias)
-   --surface-container-high:    #D4DCE6  (Hover states)
-   --surface-container-highest: #C6D0DC  (Botones secundarios / badges)
+   Superficies neutras:
+   --surface-base:              #C8D6E5
+   --surface-container-low:     #EBF1F7
+   --surface-container-high:    #DCE6F0
+   --surface-container-highest: #CDD9E6
+
+   Superficies azules (nuevas):
+   --blue-surface-deep:     #1E3A5F  (Sidebar — azul muy oscuro)
+   --blue-surface-mid:      #2A4F7A  (Hover sidebar / card activa)
+   --blue-surface-card:     #2E5484  (Fondo de cards — tertiary como superficie)
+   --blue-surface-elevated: #3B6090  (Hover cards / elementos elevados)
+   --blue-text-on-dark:     #EBF1F7  (Texto sobre fondos azules oscuros)
+   --blue-text-muted:       #A4B4BE  (Texto secundario sobre fondos azules)
    ===================================================== */
 
 :root {
@@ -32,12 +37,22 @@
   --surface-container-high:    #DCE6F0;
   --surface-container-highest: #CDD9E6;
 
+  /* Superficies azules */
+  --blue-surface-deep:         #1E3A5F;
+  --blue-surface-mid:          #2A4F7A;
+  --blue-surface-card:         #2E5484;
+  --blue-surface-elevated:     #3B6090;
+
+  /* Texto sobre fondos azules oscuros */
+  --blue-text-on-dark:         #EBF1F7;
+  --blue-text-muted:           #A4B4BE;
+
   --text-primary:              #0A0F12;
   --text-secondary:            #4A5568;
   --text-on-accent:            #FFFFFF;
 
-  /* Sombra amb tinte primario — regla del sistema */
-  --shadow-primary: 0 8px 32px rgba(59, 96, 144, 0.10);
+  --shadow-primary:     0 8px 32px rgba(59, 96, 144, 0.15);
+  --shadow-card-blue:   0 8px 32px rgba(30, 58, 95, 0.30);
 }
 
 body {
@@ -49,60 +64,9 @@ body {
   flex-direction: row;
 }
 
-#sidebar {
-  width: 20vw;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  /* surface-container-low para separar del body sin borde */
-  background-color: var(--surface-container-low);
-  justify-content: flex-start;
-}
-
-#sidebar .app-title {
-  color: var(--color-primary);
-  font-weight: 1000;
-  font-size: 32px;
-  padding: 20px 20px;
-}
-
-#sidebar #links {
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-#sidebar #links li {
-  color: var(--text-secondary);
-  list-style: none;
-  padding: 20px 20px;
-  width: 100%;
-  box-sizing: border-box;
-  cursor: pointer;
-  gap: 10px;
-  display: flex;
-  align-items: center;
-  transition: 0.3s ease;
-}
-
-#sidebar #links li:hover {
-  background-color: var(--surface-container-high);
-  transition: 0.3s ease;
-}
-
-#sidebar #links li .icon {
-  width: 20px;
-  height: 20px;
-}
-
-#sidebar #links li.selected {
-  background-color: var(--surface-container-high);
-  /* Borde izquierdo con primary — regla de la paleta */
-  border-left: 3px solid var(--color-primary);
-  color: var(--color-primary);
-}
+/* =====================================================
+   MAIN CONTAINER
+   ===================================================== */
 
 #main-container {
   flex: 1;
@@ -121,10 +85,9 @@ body {
 }
 
 #header .view-title {
-  color: var(--color-neutral);
+  color: var(--text-secondary);
   font-size: 18px;
   font-weight: 700;
-  /* Label uppercase — regla de tipografía del sistema */
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -151,7 +114,6 @@ body {
 }
 
 .section-header button {
-  /* Gradiente primary → tertiary — regla del sistema para CTAs */
   background: linear-gradient(135deg, var(--color-primary), var(--color-tertiary));
   color: var(--text-on-accent);
   display: flex;
@@ -175,12 +137,14 @@ body {
   cursor: pointer;
   transform: scale(1.05);
   transition: 0.1s ease;
-  /* Invertir: surface sobre primary al hover */
-  background: linear-gradient(135deg, var(--color-tertiary), var(--color-primary));
-  box-shadow: var(--shadow-primary);
+  background: linear-gradient(135deg, var(--color-tertiary), var(--blue-surface-deep));
+  box-shadow: var(--shadow-card-blue);
 }
 
-/* --- CUADRÍCULA DE TARJETAS --- */
+/* =====================================================
+   CARDS — Fondo azul medio
+   ===================================================== */
+
 .section-content {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -188,9 +152,7 @@ body {
   margin-top: 20px;
 }
 
-/* --- ESTILOS DE LA TARJETA --- */
 .routine-card, .exercise-card {
-  /* surface-container-low sobre surface-base = lift sutil sin sombra dura */
   background-color: var(--surface-container-low);
   border-radius: 15px;
   padding: 24px;
@@ -207,12 +169,10 @@ body {
   transform: translateY(-5px);
 }
 
-/* Tarjeta Activa */
 .routine-card.active, .exercise-card.active {
   border-left: 4px solid var(--color-primary);
 }
 
-/* --- ENCABEZADO DE LA TARJETA --- */
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -220,7 +180,6 @@ body {
 }
 
 .card-icon {
-  /* surface-container-highest para el icono — capa elevada */
   background-color: var(--surface-container-highest);
   color: var(--color-primary);
   width: 40px;
@@ -236,7 +195,6 @@ body {
   height: 24px;
 }
 
-/* Insignia */
 .badge {
   background-color: var(--surface-container-highest);
   color: var(--color-primary);
@@ -248,7 +206,6 @@ body {
   text-transform: uppercase;
 }
 
-/* --- CUERPO DE LA TARJETA --- */
 .card-body {
   display: flex;
   flex-direction: column;
@@ -269,7 +226,6 @@ body {
   line-height: 1.5;
 }
 
-/* --- ESTADÍSTICAS --- */
 .card-stats {
   display: flex;
   margin-top: auto;
@@ -292,11 +248,9 @@ body {
   width: auto;
 }
 
-/* --- BOTÓN DE LANZAMIENTO --- */
 .launch-btn {
-  /* surface-container-highest + texto primary para contraste */
-  background-color: var(--surface-container-highest);
-  color: var(--color-primary);
+  background-color: var(--color-tertiary);
+  color: var(--text-on-accent);
   border: none;
   padding: 14px;
   border-radius: 10px;
@@ -310,15 +264,17 @@ body {
 }
 
 .launch-btn:hover {
-  /* Gradiente al hover — consistente con los demás CTAs */
-  background: linear-gradient(135deg, var(--color-primary), var(--color-tertiary));
-  color: var(--text-on-accent);
+  background: var(--surface-base);
+  color: var(--blue-surface-deep);
 }
+
+/* =====================================================
+   CREATE ROUTINE
+   ===================================================== */
 
 #create-routine {
   width: 90%;
   height: 100px;
-  /* surface-container-low para integrarse con el fondo */
   background-color: var(--surface-container-low);
   display: flex;
   flex-direction: column;
@@ -329,8 +285,7 @@ body {
   gap: 15px;
   border-style: dashed;
   color: var(--text-secondary);
-  /* Ghost border — secondary al 15% de opacidad, regla del sistema */
-  border-color: rgba(164, 180, 190, 0.40);
+  border-color: rgba(164, 180, 190, 0.35);
   border-width: 2px;
 }
 

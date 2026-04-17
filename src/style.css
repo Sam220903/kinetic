@@ -1,0 +1,96 @@
+@font-face {
+  font-family: Lexend;
+  src: url("/fonts/Lexend-VariableFont_wght.ttf") format("truetype");
+}
+
+* {
+  font-family: 'Lexend';
+}
+
+:root {
+  --color-primary:             #3B6090;
+  --color-tertiary:            #2E5484;
+  --color-secondary:           #A4B4BE;
+  --color-neutral:             #0A0F12;
+
+  --surface-base:              #C8D6E5;
+  --surface-container-low:     #EBF1F7;
+  --surface-container-high:    #DCE6F0;
+  --surface-container-highest: #CDD9E6;
+
+  /* Superficies azules */
+  --blue-surface-deep:         #1E3A5F;
+  --blue-surface-mid:          #2A4F7A;
+  --blue-surface-card:         #2E5484;
+  --blue-surface-elevated:     #3B6090;
+
+  /* Texto sobre fondos azules oscuros */
+  --blue-text-on-dark:         #EBF1F7;
+  --blue-text-muted:           #A4B4BE;
+
+  --text-primary:              #0A0F12;
+  --text-secondary:            #4A5568;
+  --text-on-accent:            #FFFFFF;
+
+  --shadow-primary:     0 8px 32px rgba(59, 96, 144, 0.15);
+  --shadow-card-blue:   0 8px 32px rgba(30, 58, 95, 0.30);
+}
+
+
+/* =====================================================
+   SIDEBAR — Fondo azul profundo
+   ===================================================== */
+
+#sidebar {
+  width: 20vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--blue-surface-deep);
+  justify-content: flex-start;
+}
+
+#sidebar .app-title {
+  color: var(--blue-text-on-dark);
+  font-weight: 1000;
+  font-size: 32px;
+  padding: 20px 20px;
+}
+
+#sidebar #links {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar #links li {
+  color: var(--blue-text-muted);
+  list-style: none;
+  padding: 20px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  transition: 0.3s ease;
+}
+
+#sidebar #links li:hover {
+  background-color: var(--blue-surface-mid);
+  color: var(--blue-text-on-dark);
+  transition: 0.3s ease;
+}
+
+#sidebar #links li .icon {
+  width: 20px;
+  height: 20px;
+}
+
+#sidebar #links li.selected {
+  background-color: var(--blue-surface-mid);
+  border-left: 3px solid var(--blue-text-on-dark);
+  color: var(--blue-text-on-dark);
+}

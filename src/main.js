@@ -4,4 +4,3 @@ import '/src/style.css';
 import { PoseLandmarker, FilesetResolver, DrawingUtils } from "@mediapipe/tasks-vision";
 import Swal from "sweetalert2";
 import routinesService from "/src/assets/js/api/services/routines.js";
-

@@ -17,8 +17,11 @@ const routineName = document.getElementById("routine-name");
 const exerciseName = document.getElementById('exercise-name');
 const exerciseBodyZone = document.getElementById('exercise-body-zone');
 
-// --- NUEVO: Referencia al botón de ejemplo ---
+// Referencia al botón de ejemplo
 const btnReference = document.getElementById("btn-reference");
+
+// Overlay de carga
+const loadingOverlay = document.getElementById("loading-overlay");
 
 // Variables para la lógica dinámica del ejercicio
 let currentExerciseIndex = 0;
@@ -32,29 +35,18 @@ let poseLandmarker;
 let runningMode = "VIDEO"; 
 let lastVideoTime = -1;
 
-// =====================================================
-// PALETA: Titanium Slate
-// =====================================================
-const PALETTE = {
-  primary:             "#3B6090",
-  tertiary:            "#2E5484",
-  secondary:           "#A4B4BE",
-  neutral:             "#0A0F12",
-  surfaceBase:         "#C8D6E5",
-  surfaceContainerLow: "#EBF1F7",
-  textPrimary:         "#0A0F12",
-  textSecondary:       "#4A5568",
-  textOnAccent:        "#FFFFFF",
-};
-
 // Config reutilizable para todos los popups SweetAlert
+// Colores y estilos definidos en live-session.css bajo .kinetic-popup y clases de Swal
 const SWAL_DEFAULTS = {
-  background:          PALETTE.surfaceContainerLow,
-  color:               PALETTE.textPrimary,
-  iconColor:           PALETTE.primary,
-  confirmButtonColor:  PALETTE.primary,
-  confirmButtonText:   `<span style="color: ${PALETTE.textOnAccent}; font-weight: bold; font-family: Lexend;">¡Entendido!</span>`,
-  customClass:         { popup: "kinetic-popup" },
+  customClass: {
+    popup:             "kinetic-popup",
+    confirmButton:     "swal-confirm-btn",
+    icon:              "swal-icon",
+  },
+  // Evita que SweetAlert modifique el body (overflow/padding),
+  // lo cual colapsaba el sidebar en el layout flex
+  scrollbarPadding:    false,
+  heightAuto:          false,
 };
 
 // --- BOTÓN DE REFERENCIA ---
@@ -67,16 +59,16 @@ btnReference.addEventListener("click", () => {
     Swal.fire({
       ...SWAL_DEFAULTS,
       title: `¿Cómo hacer?: ${currentExercise.name}`,
-      confirmButtonText: `<span style="color: ${PALETTE.textOnAccent}; font-weight: bold; font-family: Lexend;">Cerrar</span>`,
+      confirmButtonText: "Cerrar",
       html: `
-        <div style="display: flex; justify-content: center; background: ${PALETTE.surfaceBase}; border-radius: 10px; padding: 10px;">
+        <div class="swal-video-wrapper">
           <video 
             src="${currentExercise.video_url}" 
-            style="width: 250px; height: 250px; object-fit: cover; border-radius: 8px;" 
+            class="swal-video"
             autoplay loop muted playsinline>
           </video>
         </div>
-        <p style="margin-top: 15px; font-size: 0.9em; color: ${PALETTE.textSecondary};">
+        <p class="swal-description">
           ${currentExercise.description || "Mantén una postura firme, controla la respiración y realiza el movimiento completo de manera fluida."}
         </p>
       `,
@@ -87,7 +79,7 @@ btnReference.addEventListener("click", () => {
       icon:  "info",
       title: "Sin referencia visual",
       text:  "Aún no contamos con un video para este ejercicio.",
-      confirmButtonText: `<span style="color: ${PALETTE.textOnAccent}; font-weight: bold; font-family: Lexend;">Cerrar</span>`,
+      confirmButtonText: "Cerrar",
     });
   }
 });
@@ -162,9 +154,16 @@ const createPoseLandmarker = async () => {
     });
     
     console.log("¡Modelo PoseLandmarker cargado exitosamente!");
+    // Ocultar overlay — el modelo está listo
+    loadingOverlay.classList.add("hidden");
     enableWebcam();
   } catch (error) {
     console.error("Error al cargar el modelo:", error);
+    // Mostrar error en el overlay en lugar de dejarlo girando
+    const subtitle = loadingOverlay.querySelector(".loading-subtitle");
+    const title    = loadingOverlay.querySelector(".loading-title");
+    if (title)    title.textContent    = "Error al cargar";
+    if (subtitle) subtitle.textContent = "No se pudo iniciar el modelo. Recarga la página.";
   }
 };
 
@@ -197,16 +196,19 @@ const predictWebcam = async () => {
       if (result.landmarks && result.landmarks.length > 0) {
         const landmarks = result.landmarks[0]; 
         
-        // --- LANDMARKS: Paleta Titanium Slate ---
-        // Puntos: primary azul acero
-        // Conectores: secondary slate como línea de estructura
+        // --- LANDMARKS: colores leídos desde variables CSS ---
+        const style = getComputedStyle(document.documentElement);
+        const clrPrimary   = style.getPropertyValue('--color-primary').trim();
+        const clrTertiary  = style.getPropertyValue('--color-tertiary').trim();
+        const clrSecondary = style.getPropertyValue('--color-secondary').trim();
+
         drawingUtils.drawLandmarks(landmarks, {
           radius: (data) => DrawingUtils.lerp(data.from.z, -0.15, 0.1, 5, 1),
-          color:  PALETTE.primary,        // #3B6090 — puntos articulares
-          fillColor: PALETTE.tertiary,    // #2E5484 — relleno interior del punto
+          color:     clrPrimary,
+          fillColor: clrTertiary,
         });
         drawingUtils.drawConnectors(landmarks, PoseLandmarker.POSE_CONNECTIONS, {
-          color:     PALETTE.secondary,   // #A4B4BE — líneas de conexión
+          color:     clrSecondary,
           lineWidth: 2
         });
 
@@ -261,7 +263,7 @@ function registerRepetition() {
         title: '¡Serie Completada!',
         text:  `Has terminado tus ${maxReps} repeticiones. ¡Excelente forma!`,
         icon:  'success',
-        confirmButtonText: `<span style="color: ${PALETTE.textOnAccent}; font-weight: bold; font-family: Lexend;">Continuar</span>`,
+        confirmButtonText: "Continuar",
         allowOutsideClick: false,
       }).then((result) => {
         if (result.isConfirmed) {
@@ -274,7 +276,7 @@ function registerRepetition() {
               title: '¡Rutina Finalizada!',
               text:  '¡Gran trabajo completando tu pausa activa!',
               icon:  'success',
-              confirmButtonText: `<span style="color: ${PALETTE.textOnAccent}; font-weight: bold; font-family: Lexend;">Cerrar</span>`,
+              confirmButtonText: "Cerrar",
             }).then(() => {
               console.log("Rutina 100% completada");
             });

@@ -1,0 +1,435 @@
+@font-face {
+  font-family: Lexend;
+  src: url("/fonts/Lexend-VariableFont_wght.ttf") format("truetype");
+}
+
+:root {
+    --color-primary:             #3B6090;
+    --color-tertiary:            #2E5484;
+    --color-secondary:           #A4B4BE;
+    --color-neutral:             #0A0F12;
+
+    --surface-base:              #C8D6E5;
+    --surface-container-low:     #EBF1F7;
+    --surface-container-high:    #DCE6F0;
+    --surface-container-highest: #CDD9E6;
+
+    /* Superficies azules */
+    --blue-surface-deep:         #1E3A5F;
+    --blue-surface-mid:          #2A4F7A;
+    --blue-surface-card:         #2E5484;
+    --blue-surface-elevated:     #3B6090;
+
+    /* Texto sobre fondos azules oscuros */
+    --blue-text-on-dark:         #EBF1F7;
+    --blue-text-muted:           #A4B4BE;
+
+    --text-primary:              #0A0F12;
+    --text-secondary:            #4A5568;
+    --text-on-accent:            #FFFFFF;
+
+    --shadow-primary:     0 8px 32px rgba(59, 96, 144, 0.15);
+    --shadow-card-blue:   0 8px 32px rgba(30, 58, 95, 0.30);
+    
+    --f-sans: 'Lexend';
+    --spacing-unit: 8px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Lexend';
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--f-sans);
+    background-color: var(--color-neutral);
+    color: var(--blue-text-on-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- Header --- */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 64px;
+    z-index: 1000;
+    background: var(--blue-surface-deep);
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 40px;
+    letter-spacing: -1px;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.logo small{
+    font-size: 12px;
+    font-weight: 500;
+    align-self: end;
+    letter-spacing: 0;
+}
+
+nav {
+    display: flex;
+    gap: 32px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--blue-text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+nav a:hover, nav a.active {
+    color: #FFFFFF;
+    transform: scale(1.02);
+    transition: color 0.3s;
+}
+
+main {
+    margin-top: 100px;
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.btn-login {
+    background: none;
+    border: none;
+    color: var(--blue-text-muted);
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-tertiary));
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: var(--shadow-card-blue);
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    background-color: var(--blue-surface-elevated);
+}
+
+/* --- Hero --- */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 64px;
+    align-items: center;
+    background: linear-gradient(180deg, var(--blue-surface-deep) 0%, var(--blue-surface-mid) 100%);
+    overflow: hidden;
+}
+
+/* Añade esta nueva regla para el video: */
+.hero-bg-video {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 55%;       /* Mantiene el diseño a la mitad derecha que tenías */
+    height: 100%;
+    object-fit: cover; /* Hace que el video llene el espacio sin deformarse */
+    opacity: 0.15;     /* La opacidad que querías */
+    mix-blend-mode: overlay; /* El efecto de fusión */
+    z-index: 1;        /* Lo coloca en el fondo */
+    pointer-events: none; /* Evita que el video interfiera con los clics */
+
+    /* --- NUEVO: Degradado para suavizar el borde izquierdo --- */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);
+    mask-image: linear-gradient(to right, transparent 0%, black 20%);
+}
+
+.hero-content {
+    position: relative;
+    max-width: 550px;
+    z-index: 2;
+}
+
+.badge {
+    display: inline-block;
+    color: var(--color-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.hero h1 {
+    font-size: 64px;
+    line-height: 1.1;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: #FFFFFF;
+}
+
+.hero p {
+    font-size: 18px;
+    color: var(--blue-text-muted);
+    margin-bottom: 48px;
+    line-height: 1.6;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-outline {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #FFFFFF;
+    padding: 16px 36px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: scale(1.05);
+    transition: all 0.3s;
+    border-color: #FFFFFF;
+}
+
+/* Hero Visual */
+.hero-visual {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.abstract-shape {
+    width: 440px;
+    height: 440px;
+    background: var(--blue-surface-elevated);
+    border-radius: 40px;
+    transform: rotate(10deg);
+    box-shadow: var(--shadow-card-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.inner-shape {
+    width: 360px;
+    height: 360px;
+    background: var(--blue-surface-mid);
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+}
+
+.grid-line {
+    position: absolute;
+    background: rgba(59, 96, 144, 0.15);
+}
+
+/* --- Modules Section (Nexus Stats Style) --- */
+.section-padding {
+    padding: 100px 64px;
+}
+
+.modules-section {
+    background-color: var(--surface-base);
+    color: var(--text-primary);
+}
+
+.section-title {
+    font-size: 40px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.module-card {
+    background-color: var(--surface-container-low);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+}
+
+.module-icon {
+    color: var(--color-primary);
+    margin-bottom: 24px;
+    width: 70px;
+    height: 70px;
+    display: block;
+}
+
+.module-card h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    text-transform: none;
+}
+
+.module-card p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* --- Workflow Section --- */
+.workflow {
+    background: linear-gradient(135deg, var(--blue-surface-deep) 0%, var(--color-neutral) 100%);
+    display: flex;
+    gap: 80px;
+}
+
+.workflow-step {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.step-num {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: var(--blue-surface-card);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    box-shadow: var(--shadow-primary);
+}
+
+.step-info h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* --- Stats Bar --- */
+.stats-bar {
+    background: var(--blue-surface-deep);
+    display: flex;
+    justify-content: space-between;
+    padding: 80px 64px;
+}
+
+.stat-item h2 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+}
+
+.stat-item p {
+    font-size: 14px;
+    color: var(--blue-text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* --- Final CTA --- */
+.final-cta {
+    text-align: center;
+    padding: 120px 64px;
+    background: var(--color-neutral);
+}
+
+.final-cta h2 {
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: #FFFFFF;
+}
+
+.final-cta span{
+    font-size: 56px;
+    font-weight: 800;
+    margin-bottom: 32px;
+    color: var(--blue-text-muted);
+}
+
+.cta-buttons{
+    margin-top: 50px;
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+}
+
+/* --- Footer --- */
+footer {
+    padding: 32px 64px;
+    background: var(--surface-container-highest);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; padding: 120px 40px; text-align: center; }
+    .hero h1 { font-size: 48px; }
+    .hero-actions { justify-content: center; }
+    .hero-visual { display: none; }
+    .modules-grid { grid-template-cols: 1fr; }
+    .workflow { flex-direction: column; }
+}
