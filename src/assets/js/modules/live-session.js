@@ -20,8 +20,6 @@ const exerciseBodyZone = document.getElementById('exercise-body-zone');
 // Referencia al botón de ejemplo
 const btnReference = document.getElementById("btn-reference");
 
-// Overlay de carga
-const loadingOverlay = document.getElementById("loading-overlay");
 
 // Variables para la lógica dinámica del ejercicio
 let currentExerciseIndex = 0;
@@ -39,7 +37,7 @@ let lastVideoTime = -1;
 // Colores y estilos definidos en live-session.css bajo .kinetic-popup y clases de Swal
 const SWAL_DEFAULTS = {
   customClass: {
-    popup:             "kinetic-popup",
+    popup:             "vhealth-popup",
     confirmButton:     "swal-confirm-btn",
     icon:              "swal-icon",
   },
@@ -88,18 +86,6 @@ btnReference.addEventListener("click", () => {
 const urlParams = new URLSearchParams(window.location.search);
 const routineID = urlParams.get('routine_id');
 
-try {
-  routineData = await routinesService.getbyID(routineID);
-  routineName.innerHTML = routineData.routine_details.name;
-  
-  if (routineData && routineData.exercises && routineData.exercises.length > 0) {
-    setupCurrentExercise();
-  } else {
-    console.error("La rutina no tiene ejercicios o no se encontró.");
-  }
-} catch (error) {
-  console.error("Error al obtener la rutina de la API:", error);
-}
 
 function setupCurrentExercise() {
   const exercise = routineData.exercises[currentExerciseIndex];
@@ -111,7 +97,7 @@ function setupCurrentExercise() {
   repCount       = 0;
   isContracting  = false;
   
-  console.log(`[KINETIC] Iniciando: ${exercise.name} | Objetivo: ${maxReps} reps`);
+  console.log(`[VHealth] Iniciando: ${exercise.name} | Objetivo: ${maxReps} reps`);
   
   if (currentRepsElement) currentRepsElement.innerText = repCount;
   updateProgressUI(0);
@@ -153,27 +139,34 @@ const createPoseLandmarker = async () => {
       numPoses: 1 
     });
     
-    console.log("¡Modelo PoseLandmarker cargado exitosamente!");
-    // Ocultar overlay — el modelo está listo
-    loadingOverlay.classList.add("hidden");
-    enableWebcam();
+    console.log("¡Modelo de reconocimiento de poses cargado exitosamente!");
+    
+    // IMPORTANTE: Ahora la función se pausará aquí hasta que la cámara encienda y cargue el video
+    await enableWebcam(); 
+    
   } catch (error) {
-    console.error("Error al cargar el modelo:", error);
-    // Mostrar error en el overlay en lugar de dejarlo girando
-    const subtitle = loadingOverlay.querySelector(".loading-subtitle");
-    const title    = loadingOverlay.querySelector(".loading-title");
-    if (title)    title.textContent    = "Error al cargar";
-    if (subtitle) subtitle.textContent = "No se pudo iniciar el modelo. Recarga la página.";
+    console.error("Error al cargar el modelo o cámara:", error);
+    throw error; // Lanzamos el error hacia initApp
   }
 };
 
-// 3. Encender la cámara
+// 3. Encender la cámara (AHORA CON PROMESA)
 const enableWebcam = () => {
-  navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-    videoRef.srcObject = stream;
-    videoRef.addEventListener('loadeddata', predictWebcam);
-  }).catch((err) => {
-    console.error("Permiso de cámara denegado o no hay cámara conectada:", err);
+  return new Promise((resolve, reject) => {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        videoRef.srcObject = stream;
+        
+        // Solo resolvemos la promesa cuando el primer frame de video esté listo
+        videoRef.addEventListener('loadeddata', () => {
+          predictWebcam(); // Iniciamos el bucle de predicción
+          resolve();       // ¡Ahora sí le avisamos al sistema que la cámara y el modelo están 100% listos!
+        });
+      })
+      .catch((err) => {
+        console.error("Permiso de cámara denegado o no hay cámara conectada:", err);
+        reject(err);
+      });
   });
 };
 
@@ -245,7 +238,64 @@ const predictWebcam = async () => {
   window.requestAnimationFrame(predictWebcam);
 };
 
-createPoseLandmarker();
+// --- INICIALIZACIÓN SINCRONIZADA ---
+const initApp = async () => {
+  // 1. Lanzamos el PopUp de carga justo al entrar a la vista
+  Swal.fire({
+    ...SWAL_DEFAULTS,
+    title: 'Cargando entorno de IA...',
+    html: 'Preparando modelos, por favor espera.',
+    allowOutsideClick: false,
+    showConfirmButton: false,
+    didOpen: () => {
+      Swal.showLoading();
+    }
+  });
+
+  try {
+    // 2. Ejecutamos ambas promesas al mismo tiempo (API y Modelo)
+    const [apiResponse] = await Promise.all([
+      routinesService.getbyID(routineID),
+      createPoseLandmarker() 
+    ]);
+
+    // 3. Asignamos los datos
+    routineData = apiResponse;
+    routineName.innerHTML = routineData.routine_details.name;
+    
+    // 4. Cerramos EXPLÍCITAMENTE el modal de carga
+    Swal.close();
+
+    // 5. Esperamos un poco para que la animación de cierre de Swal termine
+    // antes de lanzar el modal de información del ejercicio.
+    setTimeout(() => {
+      if (routineData && routineData.exercises && routineData.exercises.length > 0) {
+        setupCurrentExercise();
+      } else {
+        // Si no hay ejercicios, sobreescribimos con un error
+        Swal.fire({
+          ...SWAL_DEFAULTS,
+          icon: 'error',
+          title: 'Rutina vacía',
+          text: 'La rutina no tiene ejercicios o no se encontró.'
+        });
+      }
+    }, 300); // 300ms es generalmente suficiente para la animación de SweetAlert
+
+  } catch (error) {
+    console.error("Error en la inicialización:", error);
+    // Si la API o MediaPipe fallan, quitamos el loader y mostramos el error
+    Swal.fire({
+      ...SWAL_DEFAULTS,
+      icon: 'error',
+      title: 'Error de carga',
+      text: 'Hubo un problema al inicializar la aplicación. Intenta recargar.',
+      confirmButtonText: 'Entendido'
+    });
+  }
+};
+// Arrancamos la aplicación
+initApp();
 
 // --- FUNCIONES DE AYUDA ---
 
@@ -310,10 +360,3 @@ function updateProgressUI(currentReps) {
   if (progressPerElement)  progressPerElement.innerText   = `${percentage}%`;
   if (totalProgressElement) totalProgressElement.value    = percentage;
 }
-
-document.addEventListener("keydown", (event) => {
-  if (event.code === "Space" && currentAiParams) {
-    event.preventDefault(); 
-    registerRepetition();
-  }
-});
