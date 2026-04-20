@@ -75,7 +75,7 @@ function renderRoutines(routinesData){
 
         let launchBtn = document.createElement('a');
         launchBtn.classList.add('launch-btn');
-        launchBtn.href = `./live-session.html?routine_id=${routine.id}`
+        launchBtn.href = `./live-session?routine_id=${routine.id}`
         launchBtn.innerHTML= `Empezar ejercicio`;
 
         card.appendChild(cardBody);
