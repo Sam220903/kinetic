@@ -447,6 +447,46 @@ progress#total-progress::-moz-progress-bar {
   font-family: 'Lexend', sans-serif !important;
 }
 
+/* =====================================================
+   SWEETALERT — Íconos por tipo
+   ===================================================== */
+ 
+/* --- SUCCESS --- */
+.vhealth-popup .swal2-icon.swal2-success {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+ 
+.vhealth-popup .swal2-icon.swal2-success .swal2-success-ring {
+  border-color: rgba(59, 96, 144, 0.25) !important;
+}
+ 
+.vhealth-popup .swal2-icon.swal2-success [class^="swal2-success-line"] {
+  background-color: var(--color-primary) !important;
+}
+ 
+.vhealth-popup .swal2-icon.swal2-success::before,
+.vhealth-popup .swal2-icon.swal2-success::after {
+  background-color: var(--surface-container-low) !important;
+}
+ 
+/* --- INFO --- */
+.vhealth-popup .swal2-icon.swal2-info {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+ 
+/* --- ERROR --- */
+.vhealth-popup .swal2-icon.swal2-error {
+  border-color: var(--color-tertiary) !important;
+  color: var(--color-tertiary) !important;
+}
+ 
+.vhealth-popup .swal2-icon.swal2-error [class^="swal2-x-mark-line"] {
+  background-color: var(--color-tertiary) !important;
+}
+ 
+
 /* Ícono */
 .swal-icon.swal2-icon {
   border-color: var(--color-primary) !important;

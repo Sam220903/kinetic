@@ -36,9 +36,8 @@
   --shadow-card-blue:   0 8px 32px rgba(30, 58, 95, 0.30);
 }
 
-
 /* =====================================================
-   SIDEBAR — Fondo azul profundo
+   SIDEBAR — Fondo blanco con detalles azules
    ===================================================== */
 
 #sidebar {
@@ -46,12 +45,18 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--blue-surface-deep);
+  /* Glassmorphism blanco — igual que el header de la landing */
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /* Separación del main sin borde duro */
+  border-right: 1px solid rgba(164, 180, 190, 0.25);
   justify-content: flex-start;
 }
 
 #sidebar .app-title {
-  color: var(--blue-text-on-dark);
+  /* Logo en azul primary — igual que en el header de la landing */
+  color: var(--color-primary);
   font-weight: 1000;
   font-size: 32px;
   padding: 20px 20px;
@@ -66,7 +71,8 @@
 }
 
 #sidebar #links li {
-  color: var(--blue-text-muted);
+  /* Texto en secondary sobre fondo blanco */
+  color: var(--text-secondary);
   list-style: none;
   padding: 20px 20px;
   width: 100%;
@@ -79,8 +85,9 @@
 }
 
 #sidebar #links li:hover {
-  background-color: var(--blue-surface-mid);
-  color: var(--blue-text-on-dark);
+  /* Hover suave en superficie clara */
+  background-color: var(--surface-container-high);
+  color: var(--color-primary);
   transition: 0.3s ease;
 }
 
@@ -90,7 +97,14 @@
 }
 
 #sidebar #links li.selected {
-  background-color: var(--blue-surface-mid);
-  border-left: 3px solid var(--blue-text-on-dark);
-  color: var(--blue-text-on-dark);
+  background-color: var(--surface-container-high);
+  /* Borde izquierdo en primary — acento azul sobre fondo claro */
+  border-left: 3px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+#sidebar #links li.disabled {
+  /* Opción deshabilitada con opacidad reducida */
+  opacity: 0.5;
+  cursor: not-allowed;
 }
