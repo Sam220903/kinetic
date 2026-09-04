@@ -403,9 +403,6 @@ progress#total-progress::-moz-progress-bar {
   font-family: 'Lexend', sans-serif !important;
 }
 
-<<<<<<< HEAD
-/* Ícono genérico */
-=======
 /* =====================================================
    SWEETALERT — Íconos por tipo
    ===================================================== */
@@ -447,7 +444,6 @@ progress#total-progress::-moz-progress-bar {
  
 
 /* Ícono */
->>>>>>> c6465b049199d178fb72ff094080b8bd516d62b4
 .swal-icon.swal2-icon {
   border-color: var(--color-primary) !important;
   color: var(--color-primary) !important;
