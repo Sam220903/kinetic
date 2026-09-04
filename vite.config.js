@@ -5,31 +5,29 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
-    // ─── Base para servidor propio (raíz del dominio) ─────────────────────────
     base: env.VITE_BASE_URL || "/",
 
-    // ─── Entradas HTML ────────────────────────────────────────────────────────
     root: ".",
     publicDir: "public",
 
     build: {
       outDir: "dist",
       emptyOutDir: true,
-      sourcemap: false,          // Cambiar a true solo en staging
-      minify: "oxc",             // Vite 6+ usa Oxc (esbuild ya no viene incluido)
+      sourcemap: false,
+      minify: "oxc",
 
       rollupOptions: {
+        // ─── Entradas: todos los HTML del proyecto ──────────────────────────
         input: {
-          main:          resolve(__dirname, "index.html"),
-          routines:      resolve(__dirname, "routines.html"),
-          liveSession:   resolve(__dirname, "live-session.html"),
+          main:        resolve(__dirname, "index.html"),
+          routines:    resolve(__dirname, "routines.html"),
+          liveSession: resolve(__dirname, "live-session.html"),
         },
 
         output: {
-          // Chunks con nombres legibles y cache-friendly
-          entryFileNames:  "assets/js/[name]-[hash].js",
-          chunkFileNames:  "assets/js/[name]-[hash].js",
-          assetFileNames:  ({ name }) => {
+          entryFileNames: "assets/js/[name]-[hash].js",
+          chunkFileNames: "assets/js/[name]-[hash].js",
+          assetFileNames: ({ name }) => {
             if (/\.(woff2?|ttf|otf|eot)$/i.test(name))
               return "assets/fonts/[name]-[hash][extname]";
             if (/\.(png|jpe?g|svg|gif|webp|ico)$/i.test(name))
@@ -39,48 +37,45 @@ export default defineConfig(({ mode }) => {
             return "assets/[name]-[hash][extname]";
           },
 
-          // Code-splitting manual para mejor caché
+          // ─── Code-splitting manual ────────────────────────────────────────
           manualChunks(id) {
-            if (id.includes("node_modules"))    return "vendor";
-            if (id.includes("/api/services/"))  return "api-services";
-            if (id.includes("/api/modules/"))   return "api-modules";
+            // Librerías externas en un chunk separado para mejor caché
+            if (id.includes("node_modules"))               return "vendor";
+            // Tu capa de API separada — se cachea independiente de la UI
+            if (id.includes("/src/js/api/services/"))      return "api-services";
+            if (id.includes("/src/js/api/modules/"))       return "api-modules";
+            if (id.includes("/src/js/api/apiClient"))      return "api-client";
           },
         },
       },
 
-      // Assets pequeños inline (< 4 KB)
       assetsInlineLimit: 4096,
     },
 
-    // ─── Soporte WASM ─────────────────────────────────────────────────────────
+    // ─── WASM: excluir del pre-bundling, incluir como asset ─────────────────
     optimizeDeps: {
-      exclude: ["*.wasm"],       // No pre-bundlear archivos WASM
+      exclude: ["@mediapipe/tasks-vision"],
     },
-    assetsInclude: ["**/*.wasm"],
+    assetsInclude: ["**/*.wasm", "**/*.task"],
 
-    // ─── Aliases de rutas ─────────────────────────────────────────────────────
+    // ─── Aliases — coinciden exactamente con tu estructura en /src ───────────
     resolve: {
       alias: {
-        "@":        resolve(__dirname, "src"),
-        "@api":     resolve(__dirname, "src/js/api"),
-        "@services":resolve(__dirname, "src/js/api/services"),
-        "@modules": resolve(__dirname, "src/js/api/modules"),
-        "@assets":  resolve(__dirname, "src/assets"),
-        "@css":     resolve(__dirname, "src/assets/css"),
-        "@js":      resolve(__dirname, "src/js"),
-        "@wasm":    resolve(__dirname, "public/wasm"),
-        "@icons":   resolve(__dirname, "public/icons"),
-        "@models":  resolve(__dirname, "public/models"),
-        "@fonts":   resolve(__dirname, "public/fonts"),
+        "@":         resolve(__dirname, "src"),
+        "@assets":   resolve(__dirname, "src/assets"),
+        "@css":      resolve(__dirname, "src/assets/css"),
+        "@js":       resolve(__dirname, "src/js"),
+        "@api":      resolve(__dirname, "src/js/api"),
+        "@services": resolve(__dirname, "src/js/api/services"),
+        "@modules":  resolve(__dirname, "src/js/api/modules"),
       },
     },
 
-    // ─── Servidor de desarrollo ───────────────────────────────────────────────
+    // ─── Dev server ──────────────────────────────────────────────────────────
     server: {
       port: 5173,
       open: true,
       proxy: {
-        // Redirige /api/* al backend durante desarrollo
         "/api": {
           target: env.VITE_API_URL || "http://localhost:3000",
           changeOrigin: true,
@@ -89,12 +84,11 @@ export default defineConfig(({ mode }) => {
       },
     },
 
-    // ─── Preview (simula servidor propio en local) ────────────────────────────
+    // ─── Preview ─────────────────────────────────────────────────────────────
     preview: {
       port: 4173,
       strictPort: true,
       headers: {
-        // Headers recomendados para WASM en producción
         "Cross-Origin-Opener-Policy":   "same-origin",
         "Cross-Origin-Embedder-Policy": "require-corp",
       },
